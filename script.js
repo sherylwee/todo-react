@@ -3,6 +3,7 @@ class List extends React.Component {
     super()
     this.changeHandler = this.changeHandler.bind( this );
     this.clickHandler = this.clickHandler.bind( this );
+    this.deleteHandler = this.deleteHandler.bind( this );
   }
 
   state = {
@@ -18,7 +19,7 @@ class List extends React.Component {
     }
 
   clickHandler(event) {
-    if (this.state.word.length > 1 && this.state.word.length < 20) { 
+    if (this.state.word.length > 1 && this.state.word.length < 200) { 
     let newList = this.state.list.slice();
     newList.push(this.state.word);
     this.setState({list: newList})
@@ -27,16 +28,22 @@ class List extends React.Component {
       if (this.state.word.length <= 1) {
         this.setState({error: "Your input is too short, please try again."})
       }
-      else if (this.state.word.length >= 20) {
+      else if (this.state.word.length >= 200) {
         this.setState({error: "Your input is too long, please try again."})
       }
     }
   }
   
+  deleteHandler(x) {
+    let list = this.state.list.slice();
+    list.splice(x, 1);
+    this.setState({list: list})
+  }
+
   render() {
       // render the list with a map() here
 
-      const listSet = this.state.list.map((setList, x) => {return <li key={x}>{setList}</li>}
+      const listSet = this.state.list.map((setList, x) => {return <li key={x}>{setList} <button onClick= {this.deleteHandler}>delete</button></li>}
       )
 
       console.log("rendering");
